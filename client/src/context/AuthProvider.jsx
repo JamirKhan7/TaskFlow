@@ -10,7 +10,7 @@ export const AuthProvider = ({ children }) => {
   // The login function we will call from the form
   const login = async (email, password) => {
     try {
-      const response = await axios.post('/authentication/login', { email, password });
+      const response = await axios.post('/auth/login', { email, password });
 
       const token = response.data.token;
       const user = response.data.user;
