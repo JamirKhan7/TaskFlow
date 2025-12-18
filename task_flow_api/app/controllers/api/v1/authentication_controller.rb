@@ -9,16 +9,26 @@ class Api::V1::AuthenticationController < ApplicationController
 
       render json: {
         token: token,
-        user: {
-          id: @user.id,
-          email: @user.email,
-          name: "#{@user.first_name} #{@user.last_name}"
-        }
+        user: user_response(@user)
       }, status: :ok
     else
       render json: {
         error: "unauthorized"
       }, status: :unauthorized
     end
+  end
+
+  def me
+    render json: { success: true, user: user_response(current_user) }
+  end
+
+  private
+  
+  def user_response(user)
+    {
+      id: user.id,
+      email: user.email,
+      name: "#{user.first_name} #{user.last_name}"
+    }
   end
 end

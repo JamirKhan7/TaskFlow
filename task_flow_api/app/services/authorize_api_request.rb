@@ -1,5 +1,6 @@
 class AuthorizeApiRequest
   def initialize(headers = {})
+    @headers = headers
   end
 
   def call
@@ -21,6 +22,10 @@ class AuthorizeApiRequest
   end
 
   def http_auth_header
+    puts "--- INCOMING HEADERS ---"
+    puts headers.to_h.select { |k, v| k.include?('Authorization') || k.include?('HTTP_AUTHORIZATION') }
+    puts "------------------------"
+
     if headers["Authorization"].present?
       return headers["Authorization"].split(" ").last
     end
